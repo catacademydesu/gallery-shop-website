@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tsui - Current Exhibition</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #fafafa;
+      overflow: hidden;
+      position: relative;
+      font-family: 'M PLUS 1p', sans-serif;
+      color: #666;
+      padding: 3rem;
+      box-sizing: border-box;
+    }
+
+    .logo-link {
+      position: absolute;
+      top: 3rem;
+      left: 3rem;
+      color: #222;
+      text-decoration: none;
+      font-size: clamp(1.0rem, 1.5vw, 1.5rem); 
+      opacity: 0;
+      animation: fadeInLogo 1.5s ease forwards;
+      z-index: 10;
+      text-transform: none;
+    }
+
+    .logo-link:hover {
+      opacity: 0.6;
+    }
+
+    @keyframes fadeInLogo {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .image-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      width: auto;
+      height: auto;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: fadeInImage 1.5s ease 0.3s forwards;
+    }
+
+    @keyframes fadeInImage {
+      from { opacity: 0; transform: translate(-50%, -48%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    .exhibition-image {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .info-container {
+      position: absolute;
+      bottom: 10vh; 
+      right: 10vw;
+      max-width: 450px; 
+      opacity: 0;
+      animation: fadeInContent 1.5s ease 0.5s forwards; 
+      text-align: right;
+      z-index: 10;
+    }
+
+    @keyframes fadeInContent {
+      from { opacity: 0; transform: translate(10px, 10px); }
+      to { opacity: 1; transform: translate(0, 0); }
+    }
+
+    .ex-title {
+      font-size: clamp(1.0rem, 2.2vw, 1.2rem);
+      margin-bottom: 0.5rem;
+      line-height: 1.0;
+      font-weight: 300;
+      text-transform: none; 
+    }
+
+    .ex-subtitle {
+      font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+      margin-bottom: 1.5rem;
+      line-height: 1;
+      font-weight: 300;
+      text-transform: none; 
+    }
+
+    .ex-date {
+      font-size: clamp(0.8rem, 1.2vw, 1.4rem);
+      line-height: 1.5;
+      margin-top: 1rem;
+      font-weight: 300; 
+      text-transform: none; 
+      white-space: nowrap; 
+    }
+
+    .loading {
+      font-size: clamp(1.0rem, 1.8vw, 1.0rem);
+      color: #999;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 2rem;
+      }
+      .logo-link {
+        top: 2rem;
+        left: 2rem;
+        font-size: clamp(1.1rem, 4vw, 2.0rem);
+      }
+      .image-container {
+        max-width: calc(100vw - 4rem);
+      }
+      .exhibition-image {
+        max-height: 60vh;
+      }
+      .info-container {
+        bottom: 10vh; 
+        right: 5vw;
+        max-width: 85%;
+      }
+      .ex-title {
+        font-size: clamp(1.1rem, 4vw, 1.8rem);
+      }
+      .ex-subtitle {
+        font-size: clamp(0.8rem, 3vw, 1.2rem);
+      }
+      .ex-date {
+        font-size: clamp(0.7rem, 3vw, 0.9rem);
+        line-height: 1.4;
+        white-space: normal; 
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="menu.html" class="logo-link">Tsui</a>
+
+  <div class="image-container">
+    <!-- 画像はSpreadsheetから自動的に読み込まれます -->
+  </div>
+
+  <div class="info-container">
+    <!-- 展示情報はSpreadsheetから自動的に読み込まれます -->
+    <div class="loading"></div>
+  </div>
+
+  <script>
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQII-p_Bpga3UZBW8XpzyR3y1iXdz-s9ZsoGLGj-17-hMJf0kJe0Qg9JKPIxb63HZLMTiG5aPpr1RvJ/pub?gid=0&single=true&output=csv';
+
+    function loadExhibition() {
+      Papa.parse(SHEET_URL, {
+        download: true,
+        header: false,
+        skipEmptyLines: true,
+        complete: function(results) {
+          const imageContainer = document.querySelector('.image-container');
+          const infoContainer = document.querySelector('.info-container');
+
+          if (results.data && results.data.length > 0) {
+            const dataStartIndex = results.data[0][0].includes('作家名') ? 1 : 0;
+            const row = results.data[dataStartIndex];
+
+            if (row && row.length >= 5) {
+              const artistJa = row[0] ? row[0].trim() : '';
+              const artistEn = row[1] ? row[1].trim() : '';
+              const exhibitionTitle = row[2] ? row[2].trim() : '';
+              const period = row[3] ? row[3].trim() : '';
+              const imageUrl = row[4] ? row[4].trim() : '';
+
+              if (imageUrl) {
+                imageContainer.innerHTML = `<img src="${imageUrl}" alt="Exhibition Image" class="exhibition-image">`;
+              }
+
+              infoContainer.innerHTML = `
+                <div class="ex-title">
+                  ${artistJa}${artistEn ? '<br>' + artistEn : ''}
+                </div>
+                <div class="ex-subtitle">
+                  ${exhibitionTitle}
+                </div>
+                <div class="ex-date">
+                  ${period}
+                </div>
+              `;
+            } else {
+              infoContainer.innerHTML = '<div class="loading">データが不完全です</div>';
+            }
+          } else {
+            infoContainer.innerHTML = '<div class="loading">展示情報がありません</div>';
+          }
+        },
+        error: function(error) {
+          console.error('展示情報読み込みエラー:', error);
+          document.querySelector('.info-container').innerHTML = 
+            '<div class="loading">展示情報の読み込みに失敗しました</div>';
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', loadExhibition);
+  </script>
+
+</body>
+</html>

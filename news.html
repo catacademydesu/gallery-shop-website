@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tsui - News</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* ページ全体設定 */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #fafafa;
+      overflow-x: hidden;
+      position: relative;
+      font-family: 'M PLUS 1p', sans-serif; 
+      color: #444; 
+      padding: 3rem; 
+    }
+
+    /* index.html へ戻るロゴ (左上固定) */
+    .logo-link {
+      position: absolute;
+      top: 3rem;
+      left: 3rem;
+      color: #444;
+      text-decoration: none;
+      font-size: clamp(1.0rem, 1.5vw, 1.5rem); 
+      opacity: 0;
+      animation: fadeInLogo 1.5s ease forwards; 
+      z-index: 10;
+    }
+
+    @keyframes fadeInLogo {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ニュースコンテナ */
+    .news-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      opacity: 0;
+      animation: fadeInNews 1.5s ease 0.3s forwards;
+      z-index: 5;
+    }
+    
+    @keyframes fadeInNews {
+      from { 
+        opacity: 0; 
+        transform: translate(-50%, -40%);
+      }
+      to { 
+        opacity: 1; 
+        transform: translate(-50%, -50%); 
+      }
+    }
+
+    /* ニュース項目 */
+    .news-item {
+        margin: 1.5rem 0;
+    }
+
+    .news-date {
+        font-size: clamp(0.875rem, 1.6vw, 0.875rem); 
+        letter-spacing: 0.05rem; 
+        text-transform: none; 
+        display: inline-block;
+        color: #555;
+        margin-right: 1.5rem;
+    }
+    
+    .news-text {
+        font-size: clamp(0.875rem, 1.6vw, 0.875rem); 
+        letter-spacing: 0.05rem; 
+        text-transform: none; 
+        display: inline-block;
+        color: #555;
+    }
+
+    /* ==================================== */
+    /* レスポンシブ対応 */
+    /* ==================================== */
+
+    @media (max-width: 768px) {
+      body {
+        padding: 2rem;
+      }
+      .logo-link {
+        top: 2rem;
+        left: 2rem;
+        font-size: clamp(1.0rem, 3.8vw, 1.875rem); 
+      }
+
+      .news-date, .news-text {
+        font-size: clamp(0.75rem, 3.5vw, 1.5rem); 
+        display: block;
+        margin: 0.5rem auto; 
+      }
+      
+      .news-text {
+        width: 24em; 
+        text-align: center; 
+        word-break: break-all;
+      }
+      
+      .news-date {
+        margin-right: 0;
+        width: 24em; 
+        text-align: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+        .news-item {
+             margin: 1rem 0;
+        }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <a href="menu.html" class="logo-link">Tsui</a>
+
+  <div class="news-container"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+  <script>
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSlbm5V2XtKSzmJMT88D3e4jER6C8jEoE-ZRF_aSFLXJ_GAL8k8KDNUI_IREyTZPpg4_3l4TU2tGEEz/pub?output=csv';
+
+    function loadNews() {
+      Papa.parse(SHEET_URL, {
+        download: true,
+        header: false,
+        skipEmptyLines: true,
+        complete: function(results) {
+          const newsContainer = document.querySelector('.news-container');
+          newsContainer.innerHTML = '';
+          
+          if (results.data && results.data.length > 0) {
+            for (let i = results.data.length - 1; i >= 1; i--) {
+              const row = results.data[i];
+              const date = row[0] ? row[0].trim() : '';
+              const text = row[1] ? row[1].trim() : '';
+              
+              if (date && text) {
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+                
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'news-date';
+                dateSpan.textContent = date;
+                
+                const textSpan = document.createElement('span');
+                textSpan.className = 'news-text';
+                textSpan.textContent = text;
+                
+                newsItem.appendChild(dateSpan);
+                newsItem.appendChild(textSpan);
+                newsContainer.appendChild(newsItem);
+              }
+            }
+          } else {
+            newsContainer.textContent = 'ニュースがありません';
+          }
+        },
+        error: function(error) {
+          console.error('ニュース読み込みエラー:', error);
+          document.querySelector('.news-container').textContent = 
+            'ニュースの読み込みに失敗しました';
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', loadNews);
+  </script>
+
+</body>
+</html>

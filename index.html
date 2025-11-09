@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tsui</title>
+  <!-- Google Fonts: Special Elite -->
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+  <style>
+    /* ページ全体設定 */
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #ffffff;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* 中央画像 */
+    .center-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+    /* tsui ロゴ配置とアニメーション */
+    .logo {
+      position: absolute;
+      bottom: 15%;
+      right: 34%;
+      font-family: 'Special Elite', monospace;
+      color: #222;
+      opacity: 0;
+      animation: fadeIn 3s ease forwards;
+      text-align: center;
+      line-height: 1;
+      font-size: clamp(2.5rem, 2vw, 5.0rem); /* 自動スケール */
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* 各デバイスで位置微調整 */
+    @media (max-width: 1024px) {
+      .logo {
+        bottom: 30%;
+        right: 30%;
+      }
+    }
+    @media (max-width: 768px) {
+      .logo {
+        bottom: 28%;
+        right: 25%;
+      }
+    }
+    @media (max-width: 480px) {
+      .logo {
+        bottom: 28%;
+        right: 20%;
+        font-size: clamp(1rem, 4vw, 1.8rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="index.jpeg" alt="" class="center-image">
+  <div class="logo">Tsui</div>
+  <script>
+    // クリックで menu.html へ遷移
+    document.body.addEventListener('click', () => {
+      window.location.href = 'menu.html';
+    });
+  </script>
+</body>
+</html>

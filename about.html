@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tsui - About</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+    <style>
+        /* ページ全体設定 (スタイル共通) */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+            font-family: 'M PLUS 1p', sans-serif;
+            color: #666;
+            padding: 3rem; 
+            box-sizing: border-box; 
+        }
+        /* ------------------------------------- */
+        /* 左上ロゴ（メニューへのリンク） */
+        /* ------------------------------------- */
+        .logo-link {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            color: #222;
+            text-decoration: none;
+            font-size: clamp(1.0rem, 1.5vw, 1.5rem); 
+            opacity: 0;
+            animation: fadeInLogo 1.5s ease forwards;
+            z-index: 10;
+            text-transform: none; 
+        }
+        .logo-link:hover {
+            opacity: 0.6;
+        }
+        @keyframes fadeInLogo {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* ------------------------------------- */
+        /* 地図画像配置 */
+        /* ------------------------------------- */
+        .map-container {
+            position: absolute;
+            right: 9.5vw;
+            bottom: 10vh;
+            opacity: 0;
+            animation: fadeInMap 1.5s ease 0.3s forwards;
+            max-width: 257px;
+            width: 18vw;
+            min-width: 135px;
+            filter: brightness(1.5);
+        }
+        .map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+        @keyframes fadeInMap {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* ------------------------------------- */
+        /* コンテンツ配置（三分割構図 右上） */
+        /* ------------------------------------- */
+        .info-container {
+            position: absolute;
+            top: 3rem; 
+            right: 10vw;
+            max-width: 400px; 
+            opacity: 0;
+            animation: fadeInContent 1.5s ease 0.5s forwards; 
+            text-align: right;
+        }
+        @keyframes fadeInContent {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* ------------------------------------- */
+        /* 情報表示スタイル */
+        /* ------------------------------------- */
+        .info-header {
+            font-size: clamp(1.4rem, 2.5vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1;
+            font-weight: 500; 
+            text-transform: none; 
+        }
+        .info-detail {
+            font-size: clamp(0.8rem, 1.2vw, 1.0rem);
+            line-height: 1.8;
+            margin-top: 1rem;
+            white-space: nowrap; 
+        }
+        .info-detail a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        /* ------------------------------------- */
+        /* レスポンシブ対応 */
+        /* ------------------------------------- */
+        @media (max-width: 768px) {
+            body {
+                padding: 2rem;
+            }
+            .logo-link {
+                top: 2rem;
+                left: 2rem;
+                font-size: clamp(1.1rem, 4vw, 2.0rem);
+            }
+            .map-container {
+                right: 7vw;
+                bottom: 9.5vh;
+                transform: none;
+                width: 43.5vw;
+                max-width: 255px;
+                min-width: 180px;
+                filter: brightness(1.5);
+            }
+            @keyframes fadeInMap {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .info-container {
+                top: 2rem; 
+                right: 7vw;
+                max-width: 80%; 
+                text-align: right;
+            }
+            .info-header {
+                font-size: clamp(1.2rem, 5vw, 2rem);
+            }
+            .info-detail {
+                font-size: clamp(0.7rem, 3vw, 0.9rem);
+                line-height: 1.6; 
+                white-space: normal; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="menu.html" class="logo-link">Tsui</a>
+    
+    <!-- 地図画像 -->
+    <div class="map-container">
+        <img src="map.jpeg" alt="Tsui 地図">
+    </div>
+    
+    <div class="info-container">
+        <div class="info-header">Tsui</div>
+        <div class="info-detail">
+            591-8023<br>
+            大阪府堺市北区中百舌鳥町1-15-1<br>
+            <a href="tel:070-2017-5653">℡ 070 2017 5653</a>
+        </div>
+    </div>
+</body>
+</html>

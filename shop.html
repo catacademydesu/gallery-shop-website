@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tsui - Shop</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+
+    <style>
+        /* ------------------------------------- */
+        /* ページ全体設定 */
+        /* ------------------------------------- */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #fafafa;
+            overflow: hidden;
+            position: relative;
+            font-family: 'M PLUS 1p', sans-serif;
+            color: #222;
+            padding: 3rem;
+            box-sizing: border-box;
+
+            /* Flexboxで中央配置 */
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+
+            /* ページ全体フェードイン */
+            opacity: 0;
+            animation: fadeInPage 1.8s ease forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ------------------------------------- */
+        /* 左上ロゴ（メニューリンク） */
+        /* ------------------------------------- */
+        .logo-link {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            color: #222;
+            text-decoration: none;
+            font-size: clamp(1.0rem, 1.5vw, 1.5rem); 
+            opacity: 1; 
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .logo-link {
+                top: 2rem;
+                left: 2rem;
+                font-size: clamp(1.1rem, 4vw, 2.0rem);
+            }
+        }
+
+        /* ------------------------------------- */
+        /* 中央テキスト */
+        /* ------------------------------------- */
+        .message-container {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInMessage 1.5s ease 0.5s forwards; 
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-text {
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            font-weight: 150;
+            letter-spacing: 0.1rem;
+            text-transform: lowercase;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <a href="menu.html" class="logo-link">Tsui</a>
+
+    <div class="message-container">
+        <div class="message-text">
+            under construction
+        </div>
+    </div>
+
+</body>
+</html>

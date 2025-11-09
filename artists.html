@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tsui - Artists</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #fafafa;
+            position: relative;
+            font-family: 'M PLUS 1p', sans-serif;
+            color: #222;
+            padding: 3rem;
+            box-sizing: border-box;
+            overflow-y: auto; 
+        }
+
+        /* ------------------------------------- */
+        /* 左上ロゴ（メニューへのリンク） */
+        /* ------------------------------------- */
+        .logo-link {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            color: #222;
+            text-decoration: none;
+            font-size: clamp(1.0rem, 1.5vw, 1.5rem); 
+            opacity: 0;
+            animation: fadeInLogo 1.5s ease forwards; 
+            z-index: 10;
+            text-transform: none; 
+        }
+
+        @keyframes fadeInLogo {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .logo-link:hover {
+            opacity: 0.6;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-link {
+                top: 2rem;
+                left: 2rem;
+                font-size: clamp(1.1rem, 4vw, 2.0rem);
+            }
+        }
+
+        /* ------------------------------------- */
+        /* 作家一覧コンテナ */
+        /* ------------------------------------- */
+        .artists-container {
+            padding-top: 13.5vh;
+            margin: 0 auto; 
+            max-width: 1000px;
+            opacity: 0;
+            animation: fadeInContent 1.5s ease 0.3s forwards;
+        }
+
+        @keyframes fadeInContent {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .artists-header {
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            margin-bottom: 4rem;  /* 正確に1.5行分の余白 */
+            font-weight: 500;
+            text-align: center; 
+        }
+
+        .artist-list {
+            list-style: none;
+            padding: 0;
+            margin: 0; 
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 2rem 5vw; 
+        }
+        
+        .artist-item {
+            font-size: clamp(1.0rem, 1.5vw, 1.1rem);
+            font-weight: 300;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 2rem;
+            }
+            .artists-container {
+                padding-top: 15vh;
+                margin: 0 auto;
+            }
+            .artists-header {
+                font-size: clamp(1.0rem, 4vw, 1.6rem);
+                margin-bottom: 4rem;  /* レスポンシブでも同じ余白 */
+                text-align: center;
+            }
+            .artist-list {
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 1.5rem 5vw;
+            }
+            .artist-item {
+                font-size: clamp(0.9rem, 3.5vw, 1.0rem);
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="menu.html" class="logo-link">Tsui</a>
+
+    <div class="artists-container">
+        <div class="artists-header">お取り扱い作家</div>
+
+        <ul class="artist-list">
+            <li class="artist-item">河井寛次郎</li>
+            <li class="artist-item">北大路魯山人</li>
+            <li class="artist-item">加守田章二</li>
+            <li class="artist-item">井上萬二</li>
+            <li class="artist-item">今泉今右衛門</li>
+            <li class="artist-item">酒井田柿右衛門</li>
+            <li class="artist-item">鈴木藏</li>
+            <li class="artist-item">二代真右エ門</li>
+            <li class="artist-item">藤井錦彩</li>
+            <li class="artist-item">中原真希</li>
+            <li class="artist-item">斎藤幸代</li>
+            <li class="artist-item">吉田美統</li>
+            <li class="artist-item">武腰潤</li>
+            <li class="artist-item">中田一於</li>
+            <li class="artist-item">福島武山</li>
+            <li class="artist-item">仲田錦玉</li>
+        </ul>
+    </div>
+
+</body>
+</html>

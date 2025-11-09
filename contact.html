@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsui - Contact</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+
+    <style>
+        /* ページ全体設定 (デザインスタイル統一) */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #fafafa; /* 白背景 */
+            /* スクロールバーが出ないようにする */
+            overflow: hidden; 
+            position: relative;
+            font-family: 'M PLUS 1p', sans-serif; 
+            color: #222; /* 文字色：黒 */
+            /* 要素を画面端から離すための余白（ロゴリンクとコンテナの基準） */
+            padding: 3rem; 
+            box-sizing: border-box; 
+        }
+
+        /* ------------------------------------- */
+        /* 左上ロゴ（メニューへのリンク） */
+        /* ------------------------------------- */
+
+        .logo-link {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            color: #222;
+            text-decoration: none;
+            font-size: clamp(1.0rem, 1.5vw, 1.5rem); 
+            opacity: 0;
+            animation: fadeInLogo 1.5s ease forwards; 
+            z-index: 10;
+            /* 入力通りに表示 (Tsui) */
+            text-transform: none; 
+        }
+
+        .logo-link:hover {
+            opacity: 0.6;
+        }
+
+        @keyframes fadeInLogo {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ------------------------------------- */
+        /* コンタクトコンテナ (右下配置 - 中央寄りへ再調整) */
+        /* ------------------------------------- */
+
+        .contact-container {
+            position: absolute;
+            /* ★修正: bottom と right を 15% に増やし、中央寄りへ引き寄せる */
+            bottom: 15vh; 
+            right: 15vw; 
+            
+            text-align: right; /* テキストを右寄せ */
+            opacity: 0;
+            animation: fadeInContent 1.5s ease 0.5s forwards; 
+            z-index: 5;
+            max-width: 80%; 
+        }
+        
+        @keyframes fadeInContent {
+             from { opacity: 0; transform: translate(10px, 10px); }
+             to { opacity: 1; transform: translate(0, 0); }
+        }
+
+        /* ------------------------------------- */
+        /* メールアドレスのスタイル (文字表示のみ) */
+        /* ------------------------------------- */
+
+        .email-address {
+            font-size: clamp(1.0rem, 1.8vw, 1.0rem); 
+            letter-spacing: 0.05rem; 
+            text-transform: none; 
+            color: #222;
+            display: inline-block; 
+            white-space: nowrap; 
+        }
+
+        /* ------------------------------------- */
+        /* レスポンシブ対応 */
+        /* ------------------------------------- */
+
+        /* 768px以下 (タブレット、スマホ横) */
+        @media (max-width: 768px) {
+            body {
+                padding: 2rem;
+            }
+            .logo-link {
+                top: 2rem;
+                left: 2rem;
+                font-size: clamp(0.9rem, 3vw, 1.5rem); 
+            }
+
+            /* 小画面の調整 (影響を最小限にするため10%に戻すか、少し増やす) */
+            .contact-container {
+                bottom: 10vh; /* 5vhから10vhに増やし、中央寄りへ */
+                right: 10vw;  /* 5vwから10vwに増やし、中央寄りへ */
+                max-width: 90%; 
+            }
+
+            .email-address {
+                font-size: clamp(1.0rem, 4vw, 1.8rem); 
+                white-space: normal;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <a href="menu.html" class="logo-link">Tsui</a>
+
+    <div class="contact-container">
+        
+        <span class="email-address">
+            tsui.nishigawa@gmail.com </span>
+
+    </div>
+
+</body>
+</html>
